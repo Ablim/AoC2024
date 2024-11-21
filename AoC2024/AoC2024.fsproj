@@ -8,6 +8,9 @@
     <ItemGroup>
         <Compile Include="Day1\Solution.fs" />
         <Compile Include="Main\Program.fs" />
+        <Content Include="cookie.txt">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
