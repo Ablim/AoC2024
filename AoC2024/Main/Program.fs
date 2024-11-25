@@ -9,11 +9,9 @@ open AoC2024.Day1.Solution
 let download day =
     async {
         let filename = $"puzzleInput{day}.txt"
+        let fileExists = File.Exists(filename) 
         
-        if File.Exists(filename) then
-            let! puzzleInput = File.ReadAllLinesAsync(filename) |> Async.AwaitTask
-            return puzzleInput
-        else 
+        if not fileExists then 
             let! cookie = File.ReadAllTextAsync("cookie.txt") |> Async.AwaitTask
             let container = CookieContainer();
             container.Add(Cookie("session", cookie, "", ".adventofcode.com"))
@@ -30,8 +28,8 @@ let download day =
             let! content = response.Content.ReadAsStringAsync() |> Async.AwaitTask
             File.WriteAllTextAsync(filename, content) |> Async.AwaitTask |> ignore
             
-            let! puzzleInput = File.ReadAllLinesAsync(filename) |> Async.AwaitTask
-            return puzzleInput
+        let! puzzleInput = File.ReadAllLinesAsync(filename) |> Async.AwaitTask
+        return puzzleInput
     }
 
 [<EntryPoint>]
