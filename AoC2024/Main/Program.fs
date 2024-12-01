@@ -20,7 +20,7 @@ let download day =
             handler.CookieContainer <- container
             
             let request = new HttpRequestMessage()
-            request.RequestUri <- Uri($"https://adventofcode.com/2023/day/{day}/input")
+            request.RequestUri <- Uri($"https://adventofcode.com/2024/day/{day}/input")
             
             use client = new HttpClient(handler)
             let! response = client.SendAsync(request) |> Async.AwaitTask
