@@ -4,7 +4,7 @@ open System
 open System.IO
 open System.Net
 open System.Net.Http
-open AoC2024.Day1.Solution
+open AoC2024.Day2.Solution
 
 let download day =
     async {
@@ -34,7 +34,7 @@ let download day =
 
 [<EntryPoint>]
 let main args =
-    let day = 1
+    let day = 2
     printfn $"Advent of Code 2024 - Day {day}"
     printfn ""
     
