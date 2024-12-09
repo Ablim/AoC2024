@@ -10,7 +10,8 @@
         <Compile Include="Day2\Solution.fs" />
         <Compile Include="Day3\Solution.fs" />
         <Compile Include="Day4\Solution.fs" />
-        <Compile Include="Main\Program.fs" />
+        <Compile Include="Day5\Solution.fs" />
+        <Compile Include="Program.fs" />
         <Content Include="cookie.txt">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>

@@ -1,10 +1,10 @@
-﻿module Program
+module Program
 
 open System
 open System.IO
 open System.Net
 open System.Net.Http
-open AoC2024.Day4.Solution
+open AoC2024.Day5.Solution
 
 let download day =
     async {
@@ -34,7 +34,7 @@ let download day =
 
 [<EntryPoint>]
 let main args =
-    let day = 4
+    let day = 5
     printfn $"Advent of Code 2024 - Day {day}"
     printfn ""
     
