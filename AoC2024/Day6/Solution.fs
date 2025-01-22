@@ -1,5 +1,7 @@
 module AoC2024.Day6.Solution
 
+open Microsoft.FSharp.Collections
+
 type Direction =
     | Up = 0
     | Down = 1
@@ -162,6 +164,55 @@ let rec walk2 (pos: int * int) (dir: Direction) (map: char[][]) (path: (int * in
                 walk2 (row, newCol) dir map ((row, newCol, dir) :: path) newStops
     | _ -> System.ArgumentOutOfRangeException() |> raise
 
+let rec hasLoop (pos: int * int) (dir: Direction) (map: char[][]) (obstacle: int * int) (steps: Set<int * int * Direction>) =
+    let height = map.Length
+    let width = map[0].Length
+    let row, col = pos
+    
+    if steps.Contains (row, col, dir) then
+        true
+    else
+        let newSteps = steps.Add (row, col, dir)
+        
+        match dir with
+        | Direction.Up ->
+            let newRow = row - 1
+            if newRow < 0 then
+                false
+            else
+                if map[newRow][col] = '#' || (newRow, col) = obstacle then
+                    hasLoop pos Direction.Right map obstacle newSteps
+                else
+                    hasLoop (newRow, col) dir map obstacle newSteps
+        | Direction.Down ->
+            let newRow = row + 1
+            if newRow >= height then
+                false
+            else
+                if map[newRow][col] = '#' || (newRow, col) = obstacle then
+                    hasLoop pos Direction.Left map obstacle newSteps
+                else
+                    hasLoop (newRow, col) dir map obstacle newSteps
+        | Direction.Right ->
+            let newCol = col + 1
+            if newCol >= width then
+                false
+            else
+                if map[row][newCol] = '#' || (row, newCol) = obstacle then
+                    hasLoop pos Direction.Down map obstacle newSteps
+                else
+                    hasLoop (row, newCol) dir map obstacle newSteps
+        | Direction.Left ->
+            let newCol = col - 1
+            if newCol < 0 then
+                false
+            else
+                if map[row][newCol] = '#' || (row, newCol) = obstacle then
+                    hasLoop pos Direction.Up map obstacle newSteps
+                else
+                    hasLoop (row, newCol) dir map obstacle newSteps
+        | _ -> System.ArgumentOutOfRangeException() |> raise
+
 let solve1 (puzzleInput: string seq) =
     let map =
         puzzleInput
@@ -195,7 +246,15 @@ let solve2 (puzzleInput: string seq) =
         }
         |> Seq.head
     let result =
-        walk2 (startRow, startCol) Direction.Up map [ (startRow, startCol, Direction.Up) ] []
-        |> List.distinct
-        |> List.length
+        seq {
+            for row in 0..map.Length - 1 do
+                for col in 0..map[0].Length - 1 do
+                    if map[row][col] = '.' then
+                        hasLoop (startRow, startCol) Direction.Up map (row, col) Set.empty
+                
+                printfn $"Row %i{row + 1} of total %i{map.Length}"
+        }
+        |> Seq.filter id
+        |> Seq.length
+        
     result.ToString()

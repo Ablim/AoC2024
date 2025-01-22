@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +14,7 @@
         <Compile Include="Day6\Solution.fs" />
         <Compile Include="Day7\Solution.fs" />
         <Compile Include="Day8\Solution.fs" />
+        <Compile Include="Day9\Solution.fs" />
         <Compile Include="Program.fs" />
         <Content Include="cookie.txt">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
