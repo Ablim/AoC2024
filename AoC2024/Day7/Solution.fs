@@ -16,7 +16,9 @@ let rec calculate2 (answer: bigint) (maybeAnswer: bigint) numbers =
         if maybeAnswer > answer then
             false
         else
-            calculate2 answer (h + maybeAnswer) t || calculate2 answer (h * maybeAnswer) t
+            calculate2 answer (maybeAnswer + h) t
+            || calculate2 answer (maybeAnswer * h) t
+            || calculate2 answer ($"{maybeAnswer}{h}" |> bigint.Parse) t
 
 let solve1 (puzzleInput: string seq) =
     let answers =
@@ -56,7 +58,7 @@ let solve2 (puzzleInput: string seq) =
     let result =
         seq {
             for i in 0..answers.Length - 1 do
-                if calculate2 answers[i] 0I terms[i] then
+                if calculate2 answers[i] terms[i].Head terms[i].Tail then
                     answers[i]
         }
         |> Seq.sum
